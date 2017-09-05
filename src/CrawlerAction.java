@@ -24,9 +24,9 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 /**
- * httpclientÅÀ³æ
- * »ñÈ¡µ½aaºó¸ù¾İaaµÄÀàĞÍÀ´·Ö±ğ½âÎö
- * htmlÊ¹ÓÃjsoupÀ´½âÎö£¬jsonÍ¨¹ıjson½âÎö£¬xmlÍ¨¹ıjdom»òÕßdom4j½âÎö
+ * httpclientçˆ¬è™«
+ * è·å–åˆ°aaåæ ¹æ®aaçš„ç±»å‹æ¥åˆ†åˆ«è§£æ
+ * htmlä½¿ç”¨jsoupæ¥è§£æï¼Œjsoné€šè¿‡jsonè§£æï¼Œxmlé€šè¿‡jdomæˆ–è€…dom4jè§£æ
  * @author yaowc
  *
  */
@@ -43,19 +43,19 @@ public class CrawlerAction{
 		}
 	} 
 	/*
-	 * HttpGet·½Ê½×¥È¡·µ»ØĞÅÏ¢
+	 * HttpGetæ–¹å¼æŠ“å–è¿”å›ä¿¡æ¯
 	 */
 	public static void httpGetMethod(String url){
 		CloseableHttpClient httpClient = getHttpClient();
 		try {
 			HttpGet httpGet = new HttpGet(url);
-			logger.info("Ö´ĞĞgetÇëÇó:...." + httpGet.getURI());
+			logger.info("Ö´æ‰§è¡Œgetè¯·æ±‚:...." + httpGet.getURI());
 			CloseableHttpResponse httpResponse = null;
 			
 			try {
 				httpResponse = httpClient.execute(httpGet);
 			} catch (Exception e1) {
-				logger.info("----------------------------Á¬½ÓÊ§°Ü");
+				logger.info("----------------------------è¿æ¥å¤±è´¥");
 			}
 			HttpEntity entity = httpResponse.getEntity();
 			if(null != entity){
@@ -78,16 +78,16 @@ public class CrawlerAction{
 		}
 	}
 	/*
-	 * HttpPost·½Ê½×¥È¡·µ»ØĞÅÏ¢£¬filed1ÎªÉÏ´«²ÎÊı¿É×ÔĞĞÌí¼Ó
+	 * HttpPostæ–¹å¼æŠ“å–è¿”å›ä¿¡æ¯ï¼Œfiled1ä¸ºä¸Šä¼ å‚æ•°å¯è‡ªè¡Œæ·»åŠ 
 	 */
 	public void httpPostMethod(String url,String filed1){
 		CloseableHttpClient httpClient = getHttpClient();
 		
 		try {
 			HttpPost httpPost = new HttpPost(url);
-			// ´´½¨²ÎÊıÁĞ±í
+			// åˆ›å»ºå‚æ•°åˆ—è¡¨
 			List<NameValuePair> list = new ArrayList<NameValuePair>();
-			list.add(new BasicNameValuePair("filed1µÄ×Ö¶ÎÃû³Æ", filed1));
+			list.add(new BasicNameValuePair("filed1çš„å­—æ®µåç§°", filed1));
 			UrlEncodedFormEntity uefEntity = new UrlEncodedFormEntity(list,"UTF-8");
 			httpPost.setEntity(uefEntity);
 			
@@ -95,7 +95,7 @@ public class CrawlerAction{
 			try {
 				httpResponse = httpClient.execute(httpPost);
 			} catch (Exception e1) {
-				logger.info("----------------------------Á¬½ÓÊ§°Ü");
+				logger.info("----------------------------è¿æ¥å¤±è´¥");
 			}
 			
 			HttpEntity entity = httpResponse.getEntity();
@@ -117,22 +117,22 @@ public class CrawlerAction{
 	
 	public static byte[] readInputStream(InputStream inStream) throws Exception {
 		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-		// ´´½¨Ò»¸öBuffer×Ö·û´®
+		// åˆ›å»ºä¸€ä¸ªBufferå­—ç¬¦ä¸²
 		byte[] buffer = new byte[1024];
-		// Ã¿´Î¶ÁÈ¡µÄ×Ö·û´®³¤¶È£¬Èç¹ûÎª-1£¬´ú±íÈ«²¿¶ÁÈ¡Íê±Ï
+		// æ¯æ¬¡è¯»å–çš„å­—ç¬¦ä¸²é•¿åº¦ï¼Œå¦‚æœä¸º-1ï¼Œä»£è¡¨å…¨éƒ¨è¯»å–å®Œæ¯•
 		int len = 0;
-		// Ê¹ÓÃÒ»¸öÊäÈëÁ÷´ÓbufferÀï°ÑÊı¾İ¶ÁÈ¡³öÀ´
+		// ä½¿ç”¨ä¸€ä¸ªè¾“å…¥æµä»bufferé‡ŒæŠŠæ•°æ®è¯»å–å‡ºæ¥
 		while ((len = inStream.read(buffer)) != -1) {
-			// ÓÃÊä³öÁ÷ÍùbufferÀïĞ´ÈëÊı¾İ£¬ÖĞ¼ä²ÎÊı´ú±í´ÓÄÄ¸öÎ»ÖÃ¿ªÊ¼¶Á£¬len´ú±í¶ÁÈ¡µÄ³¤¶È
+			// ç”¨è¾“å‡ºæµå¾€bufferé‡Œå†™å…¥æ•°æ®ï¼Œä¸­é—´å‚æ•°ä»£è¡¨ä»å“ªä¸ªä½ç½®å¼€å§‹è¯»ï¼Œlenä»£è¡¨è¯»å–çš„é•¿åº¦
 			outStream.write(buffer, 0, len);
 		}
-		// ¹Ø±ÕÊäÈëÁ÷
+		// å…³é—­è¾“å…¥æµ
 		inStream.close();
-		// °ÑoutStreamÀïµÄÊı¾İĞ´ÈëÄÚ´æ
+		// æŠŠoutStreamé‡Œçš„æ•°æ®å†™å…¥å†…å­˜
 		return outStream.toByteArray();
 	}
 	/*
-	 * Í¼Æ¬ÏÂÔØ
+	 * å›¾ç‰‡ä¸‹è½½
 	 */
 	public void getImg(String url){
 		HttpURLConnection conn = null;
